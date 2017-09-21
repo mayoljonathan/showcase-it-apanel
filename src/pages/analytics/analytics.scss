@@ -1,0 +1,30 @@
+page-analytics {
+    ion-col{
+        height: fit-content;
+    }
+
+    div.flex{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        // align-content: flex-start;
+        
+    }
+    .item{
+        align-self: flex-start;
+        height: fit-content;
+        // flex: 1;
+        // align-items: baseline;
+        flex-basis: 33%;
+    }
+
+    // .item{
+    //     float: left;
+    //     width: 33%;
+    // }
+
+    // .item:nth-child(3n+1) {
+    //     // clear: left;   
+    //     clear: right;
+    // }
+}

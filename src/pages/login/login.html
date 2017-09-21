@@ -1,0 +1,37 @@
+<ion-content class="default-bg">
+
+  <div class="login-container">
+    <ion-card padding>
+      <ion-card-header>
+        <div class="logo-container"></div>
+        <h1 class="title" text-center text-wrap>Showcase It - Admin Panel</h1>
+      </ion-card-header>
+
+      <ion-card-content padding>
+        <ion-item no-padding>
+          <ion-label floating>Email address</ion-label>
+          <ion-input type="email" [(ngModel)]="admin.email"></ion-input>
+        </ion-item>
+
+        <ion-item no-padding>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" [(ngModel)]="admin.password"></ion-input>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-label color="primary">
+            <span (click)="forgotPassword()" tappable class="size-14">Forgot Password?</span>
+          </ion-label>  
+        </ion-item>
+
+        <ion-row margin-top class="flex-h">
+          <button class="round-button" (click)="signIn()">
+            <ion-icon class="medium-icon" name="md-arrow-forward" color="primary-text"></ion-icon>
+          </button>
+        </ion-row>
+
+      </ion-card-content>
+
+    </ion-card>
+  </div>
+
+</ion-content>

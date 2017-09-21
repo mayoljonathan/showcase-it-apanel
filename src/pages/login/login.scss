@@ -1,0 +1,44 @@
+page-login {
+    .title{
+        font-weight: 900;
+        padding-top: 24px;
+    }
+    .logo-container{
+        background-image: url('http://icons.iconarchive.com/icons/sicons/basic-round-social/512/scribd-icon.png');
+        height: 100px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    
+    .label-md[floating]{
+        font-size: 18px;
+    }
+    ion-input{
+        font-size: 20px;
+    }
+
+    .login-container{
+        height: 100%;
+        display: grid;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        // height: 100%;
+
+        // width: 400px;
+        // max-width: 400px;
+        // margin: auto;
+        // padding-top: 10px;
+        // padding-bottom: 10px;
+    }
+
+    .login-container ion-card{
+        margin: auto;
+        // width: 400px;
+        max-width: 600px;
+        
+    }
+
+
+}

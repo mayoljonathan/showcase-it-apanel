@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon color="white" name="menu"></ion-icon>
+    </button>
+    <ion-title>App Requests</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <!--toolbarBackground="dev-dark" toolbarColor="pure-white" indicatorColor="pure-white" (tabSelect)="onTabSelect($event)"-->
+  <!--#superTabs-->
+  <super-tabs #superTabs scrollTabs="true" sideMenu="left" badgeColor="danger" toolbarColor="white" toolbarBackground="super-tabs-default" indicatorColor="white">
+    <super-tab [root]="tab1" [badge]="prCount != 0 ? prCount : ''" title="Publish Requests"></super-tab>
+    <super-tab [root]="tab2" [badge]="cuCount != 0 ? cuCount : ''" title="Content Update Requests"></super-tab>
+  </super-tabs>
+</ion-content>

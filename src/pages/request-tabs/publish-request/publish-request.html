@@ -1,0 +1,55 @@
+<ion-content class="bg">
+   <!--|| (!requests[requests?.length-1]?.appData && !requests[requests?.length-1]?.userData)-->
+  <div class="flex-hv full-height" *ngIf="!requests">
+    <div class="loader"></div>
+  </div>
+
+  <!--Empty requests-->
+  <div padding class="container center" *ngIf="requests && requests?.length == 0">
+    <ion-card class="app-container scroll-x">
+      <div class="flex-hv h-300">
+        <div>
+          <ion-icon name="md-checkmark-circle-outline" class="large-icon flex-h"></ion-icon>
+          <h2 class="size-18">There are no publish requests at the moment.</h2>
+        </div>
+      </div>
+    </ion-card>
+  </div>
+
+  <!--With requests-->
+  <div padding class="container center" *ngIf="requests && requests[requests.length-1]?.appData && requests[requests.length-1]?.userData">
+    <ion-card class="app-container scroll-x">
+      <table class="center">
+        <thead>
+          <th>App name</th>
+          <th width="150">Type/Category</th>
+          <th width="30%">Owner</th>
+          <th width="150">Date requested</th>
+        </thead>
+        <tbody>
+          <tr class="app-row" *ngFor="let r of requests;let i=index" padding tappable>
+            <td class="app-name-container" (click)='navigateToRequest(i)'>
+              <div class="app-icon-placeholder" [id]="'app-icon-placeholder-'+i">
+                <img [src]="r.appData?.thumbIconURL || r.appData?.iconURL" alt="" (load)="loadedAppIcon(i)" class="app-icon">
+              </div>
+              <span class="app-title">{{r.appData?.title}}</span>
+            </td>
+            <td (click)='navigateToRequest(i)'>
+              <span text-capitalize>{{r.appData?.type}}/{{r.appData?.category}}</span>
+            </td>
+            <td (click)='navigateToRequest(i)'>
+              <div class="flex-v">
+                <img [src]="r.userData?.photoURL" alt="" class="owner-img">
+                <span class="owner-name">{{r.userData?.name}}</span>
+              </div>
+            </td>
+            <td (click)='navigateToRequest(i)'>
+              <span>{{r?.dateCreated | toFullDateAndTime}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-card>
+  </div>
+  
+</ion-content>

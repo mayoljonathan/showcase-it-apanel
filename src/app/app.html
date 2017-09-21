@@ -1,0 +1,25 @@
+<ion-split-pane>
+
+  <ion-menu [content]="content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Showcase It - Admin Panel</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list class="mtop-10" no-lines>
+        <div *ngFor="let p of pages" [class.sideMenuActive]="selectedSideMenuIndex==p.index ? true:null">
+          <button ion-item menuClose (click)="openPage(p)" [class.sideMenuActive]="selectedSideMenuIndex==p.index ? true:null">
+            <ion-icon item-start md-name [md-name]="p.icon" [color]="selectedSideMenuIndex==p.index ? 'primary':null"></ion-icon>{{p.title}}
+          </button>
+        </div>
+      </ion-list>
+    </ion-content>
+
+  </ion-menu>
+
+  <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+  <ion-nav main [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+
+</ion-split-pane>
