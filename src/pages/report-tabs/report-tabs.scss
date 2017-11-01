@@ -1,0 +1,23 @@
+page-report-tabs {
+    super-tabs > super-tabs-toolbar > ion-toolbar > div.toolbar-content.toolbar-content-md > div > div.tab-buttons{
+        height: 59px !important;
+    }
+
+    super-tab-button > span.title{
+        font-size: 15px;
+        bottom: -6px;
+        position: relative;
+    }
+    super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons super-tab-button .badge {
+        top: 2px !important;
+    }
+
+    ion-badge{
+        border-radius: 50px !important;
+    }
+
+    // Fix for new version of chrome
+    super-tabs-toolbar > ion-toolbar.toolbar.scroll-tabs .tab-buttons-container .tab-buttons super-tab-button {
+        flex: 0 0 auto;
+    }
+}

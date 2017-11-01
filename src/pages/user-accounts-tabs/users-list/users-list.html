@@ -1,0 +1,82 @@
+<ion-content class="bg">
+  <div class="flex-hv full-height" *ngIf="!users">
+    <div class="loader"></div>
+  </div>
+
+  <div padding class="container-md center" *ngIf="users && users?.length > 0">
+    <div class="flex-v flex-end user-count-container">
+      <ion-icon md-name="people" class="size-28 mright-5"></ion-icon>
+      <span>Users Count: <b class="size-16">{{(users | filter: searchBarInput.value:'name')?.length}}</b></span>
+    </div>
+
+    <ion-card class="table-card-container">
+      <ion-row class="th-bg separator-bot">
+        <ion-col no-padding class="flex-hv">
+          <ion-item class="th-bg">
+            <ion-icon name="md-search" item-start></ion-icon>
+            <ion-input #searchBarInput placeholder="Search user by name" clearInput></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <div class="flex-hv h-300" *ngIf="users && users?.length == 0">
+        <div>
+          <ion-icon md-name="filter_none" class="large-icon flex-h"></ion-icon>
+          <h2 class="size-18">There are currently no users registered.</h2>
+        </div>
+      </div>
+      
+      <ion-row class="scroll-x">
+        <table class="full-width">
+          <thead class="th-bg">
+            <th>Name</th>
+            <th>Email Address</th>
+            <th text-center>Type</th>
+            <th text-center>Showcased Apps</th>
+            <th text-center width="50">Status</th>
+            <th text-center width="50">Last Seen</th>
+          </thead>
+          <tbody>
+            <!--(admins | filter: searchBarInput.value:'name')-->
+            <tr class="table-row" *ngFor="let u of (users | filter: searchBarInput.value:'name' | sort:'lastSeen':'desc' );let i=index" padding tappable>
+              <td class="table-name-container" (click)='navigateToUser(u)'>
+                <div class="user-img-placeholder" [id]="'user-img-placeholder-'+i">
+                  <img [src]="u.photoURL || '../assets/images/user-placeholder.png'" alt="" (load)="loadedUserPhoto(i)" class="user-img">
+                </div>
+                <!--<ion-icon *ngIf="u?.isDeveloper" name="md-code" color="primary" class="size-20"></ion-icon>-->
+                <span class="table-name">{{u.name}}</span>
+              </td>
+              <td (click)='navigateToUser(u)'>{{u.email}}</td>
+              <td text-center (click)='navigateToUser(u)'>
+                <ion-badge color='primary' *ngIf="u?.isDeveloper">Developer</ion-badge>
+                <ion-badge color='secondary' *ngIf="!u?.isDeveloper">Normal</ion-badge>
+              </td>
+              <td text-center (click)='navigateToUser(u)'>
+                {{u?.appCount ? u?.appCount : '-'}}
+              </td>
+              <td text-center (click)='navigateToUser(u)'>
+                <ion-badge [color]="getUserStatusColor(u)" text-capitalize>{{u.status}}</ion-badge>
+              </td>
+              <td text-center (click)='navigateToUser(u)'>
+                <ion-badge *ngIf="u.lastSeen === true; else notOnline" class='secondary'>Online</ion-badge>
+                <ng-template #notOnline>
+                  <span>{{!u?.lastSeen ? '-' : (u?.lastSeen | timeFromNow)}}</span>
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-row>
+
+      <!--EMPTY SEARCH-->
+      <div class="flex-hv h-300" *ngIf="users?.length!=0 && (users | filter: searchBarInput.value:'name')?.length === 0">
+        <div>
+          <ion-icon md-name="search" class="large-icon flex-h"></ion-icon>
+          <h2 class="size-18">No users matched in your search query.</h2>
+        </div>
+      </div>
+
+    </ion-card>
+  </div>
+  
+</ion-content>

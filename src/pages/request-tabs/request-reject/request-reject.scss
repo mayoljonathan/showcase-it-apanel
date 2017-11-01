@@ -1,0 +1,39 @@
+page-request-reject {
+    .admin-img-placeholder {
+        border-radius: 100px;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeHolderShimmer;
+        animation-timing-function: linear;
+        background: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+    .admin-img{
+        border-radius: 100px;
+        border: 1px solid #dedede;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+    .admin-name{
+        margin-left: 10px;
+        max-height: 40px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+     @keyframes placeHolderShimmer{
+        0%{
+            background-position: -40px 0
+        }
+        100%{
+            background-position: 40px 0
+        }
+    }
+}

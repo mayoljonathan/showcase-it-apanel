@@ -1,0 +1,54 @@
+<ion-content class="bg">
+  <div class="flex-hv full-height" *ngIf="!requests  && !pageLoaded">
+    <div class="loader"></div>
+  </div>
+
+  <!--Empty requests-->
+  <div padding class="container center" *ngIf="requests && requests?.length == 0 && pageLoaded">
+    <ion-card class="app-container scroll-x">
+      <div class="flex-hv h-300">
+        <div>
+          <ion-icon name="md-checkmark-circle-outline" class="large-icon flex-h"></ion-icon>
+          <h2 class="size-16" text-wrap text-center>There are no logs at the moment.</h2>
+        </div>
+      </div>
+    </ion-card>
+  </div>
+
+  <!--With requests-->
+  <div padding class="container center" *ngIf="requests && requests[requests.length-1]?.appData && requests[requests.length-1]?.userData && pageLoaded">
+    <ion-card class="app-container scroll-x">
+      <table class="full-width">
+        <thead class="th-bg">
+          <th width="150">Date/Time</th>
+          <th width="125">Type</th>
+          <th>Content</th>
+          <th text-right width="100">Action taken</th>
+        </thead>
+        <tbody>
+          <tr class="table-row" *ngFor="let r of (requests | sort:'log_dateCreated':'desc');let i=index" padding tappable>
+            <td (click)="navigateToRequest(i)">
+              <span>{{r?.log_dateCreated | toFullDateAndTime}}</span>
+            </td>
+            <td (click)="navigateToRequest(i)">
+              <span>{{r?.request_type === 'publish_request' ? 'Publish Request' : 'Content Update'}}</span>
+            </td>
+            <td (click)="navigateToRequest(i)">
+              <div class="app-icon-placeholder" [id]="'app-icon-placeholder-'+i">
+                <img [src]="r.appData?.thumbIconURL || r.appData?.iconURL" alt="" (load)="loadedAppIcon(i)" class="app-icon">
+              </div>
+              <span>
+                <span class="bold">{{r?.appData?.title}}</span> was {{actionName(r?.action)}} by 
+                <span class="bold mright-5">{{r?.adminData?.name}}{{r?.admin_uid === cacheService.admin_uid ? ' (you).' : '.'}}</span>
+              </span>
+            </td>
+            <td text-center (click)="navigateToRequest(i)">
+              <ion-icon [name]="actionStatus('name',r?.action)" [color]="actionStatus('color',r?.action)"></ion-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-card>
+  </div>
+  
+</ion-content>

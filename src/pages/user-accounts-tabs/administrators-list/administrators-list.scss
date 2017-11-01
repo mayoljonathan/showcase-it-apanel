@@ -1,0 +1,75 @@
+page-administrators-list {
+    .admin-count-container{
+        margin: 0 10px;
+    }
+    td{
+        padding: 0.7em 1em;
+    }
+    .admin-img{
+        width: 40px;
+        height: 40px;
+        max-width: 40px;
+        border-radius: 100px;
+    }
+    @keyframes placeHolderShimmer{
+        0%{
+            background-position: -40px 0
+        }
+        100%{
+            background-position: 40px 0
+        }
+    }
+    .admin-img-placeholder {
+        border-radius: 100px;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeHolderShimmer;
+        animation-timing-function: linear;
+        background: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    // REMOVE BLUE LINE IN INPUT
+    .item-md.item-input.input-has-focus .item-inner {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+    }
+    .list-md .item-input.input-has-focus:last-child {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+    }
+    .list-md .item-input.input-has-focus:last-child .item-inner {
+        box-shadow: none;
+    }
+    .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+    }
+    .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+    }
+    .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child .item-inner {
+        box-shadow: none;
+    }
+    .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+    }
+    .list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    // REMOVE BORDER IN INPUT
+    .card-md .item-md.item-block:not(:last-child) .item-inner, .card-md .item-md.item-block:last-child .item-inner {
+        border-bottom: none !important;
+    }
+}

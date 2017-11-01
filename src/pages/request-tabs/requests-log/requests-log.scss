@@ -1,0 +1,58 @@
+page-requests-log {
+    .app-name-container{
+        display: flex;
+        align-items: center;
+    }
+    .app-container {
+        white-space: nowrap;
+    }
+    .app-row:hover,
+    .app-row:active{
+        background-color: #F1F1F1;
+    }
+    .app-icon{
+        width: 35px;
+        height: 35px;
+        max-width: 35px;
+        border-radius: 5px;
+    }
+    .app-title{
+        margin-left: 10px;
+        max-height: 35px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    @keyframes placeHolderShimmer{
+        0%{
+            background-position: -35px 0
+        }
+        100%{
+            background-position: 35px 0
+        }
+    }
+    .app-icon-placeholder {
+        border-radius: 5px;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeHolderShimmer;
+        animation-timing-function: linear;
+        background: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        width: 35px;
+        height: 35px;
+        min-width: 35px;
+        min-height: 35px;
+        position: relative;
+        overflow: hidden;
+    }
+    div[id^=app-icon-placeholder-]{
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 5px;        
+    }
+}

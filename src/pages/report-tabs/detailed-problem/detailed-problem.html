@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>User Problem</ion-title>
+  </ion-navbar>  
+</ion-header>
+
+<ion-content class="bg">
+  <div class="container center page-container">
+		<ion-card style="margin-top:0px">
+      <div padding>
+        <ion-item no-padding text-wrap>
+          <p>Date Reported: <b>{{problem?.dateReported | toFullDateAndTime}} ({{problem?.dateReported | timeFromNow}})</b></p>
+        </ion-item>
+        <ion-item no-padding text-wrap>
+          <p>Email Address: <b>{{problem.email}}</b></p>
+        </ion-item>
+        <p>Message:</p>
+        <ion-item no-padding text-wrap>
+          <p class="bold pre-line" [innerHtml]="problem.problem | linkify"></p>
+        </ion-item>
+        <div class="flex-v flex-end">
+          <button ion-button color="danger" (click)="deleteProblem()">Delete</button>
+          <button ion-button (click)="emailUser()">Email User</button>
+        </div>
+      </div>
+
+		</ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu" color="light"></ion-icon>
+    </button>
+    <ion-title>Applications List</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="bg">
+  <div class="flex-hv full-height" *ngIf="!apps;else loadedData">
+    <div class="loader"></div>
+  </div>
+
+  <ng-template #loadedData>
+    <app-list-table [apps]="apps"></app-list-table>
+  </ng-template>
+
+  <!--<div padding class="container center" *ngIf="apps && apps?.length > 0">
+    <ion-card class="table-card-container">
+      <ion-row class="th-bg separator-bot">
+        <ion-col no-padding class="flex-hv">
+          <ion-item class="th-bg">
+            <ion-icon name="md-search" item-start></ion-icon>
+            <ion-input #searchBarInput placeholder="Search apps" clearInput></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <div class="flex-hv h-300" *ngIf="apps && apps?.length == 0">
+        <div>
+          <ion-icon md-name="apps" class="large-icon flex-h"></ion-icon>
+          <h2 class="size-18">There are currently no apps published yet.</h2>
+        </div>
+      </div>
+      
+      <ion-row class="scroll-x">
+        <table class="full-width">
+          <thead class="th-bg">
+            <th class='full-width'>App name</th>
+            <th text-center width="50">Platforms</th>
+            <th width="150">Type/Category</th>
+            <th>Date published</th>
+            <th text-center width="50">Status</th>
+            <th width="40"></th>
+          </thead>
+          <tbody>
+            <tr class="table-row" *ngFor="let a of (apps | filter: searchBarInput.value:'title' | sort:'datePublished':'desc' );let i=index" padding tappable>
+              <td class="table-name-container" (click)='navigateToApp(i)'>
+                <div class="app-icon-placeholder" [id]="'app-icon-placeholder-'+i">
+                  <img [src]="a.thumbIconURL || a.iconURL" alt="" (load)="loadedAppIcon(i)" class="app-icon">
+                </div>
+                <span class="table-name">{{a.title}}</span>
+              </td>
+              <td text-center (click)='navigateToApp(i)'>
+                <ion-icon *ngIf="a.platforms && a.platforms.web?.isCompatible" name="md-globe" class="mright-10 size-24"></ion-icon>
+                <ion-icon *ngIf="a.platforms && a.platforms.android?.isCompatible" name="logo-android" color="android" class="mright-10 size-24"></ion-icon>
+                <ion-icon *ngIf="a.platforms && a.platforms.desktop?.isCompatible" name="md-desktop" class="size-24"></ion-icon>
+              </td>
+              <td (click)='navigateToApp(i)'>
+                <span text-capitalize>{{a?.type}}/{{a?.category_name}}</span>
+              </td>
+              <td (click)='navigateToApp(i)'>
+                <span class="size-14">{{a.datePublished | toFullDateAndTime}}</span>
+              </td>
+              <td text-center (click)='navigateToApp(i)'>
+                <ion-badge *ngIf="a.status === 'published';" color="primary" class='size-14'>Published</ion-badge>
+                <ion-badge *ngIf="a.status === 'unpublished';" color="disabled" class='size-14'>Unpublished</ion-badge>
+              </td>
+              <td text-center (click)='showMoreActions(i)'>
+                <ion-icon name="md-more"></ion-icon>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-row>
+
+      <div class="flex-hv h-300" *ngIf="apps?.length!=0 && (apps | filter: searchBarInput.value:'title')?.length === 0">
+        <div>
+          <ion-icon md-name="search" class="large-icon flex-h"></ion-icon>
+          <h2 class="size-18">No apps matched in your search query.</h2>
+        </div>
+      </div>
+
+    </ion-card>
+  </div>-->
+  
+</ion-content>

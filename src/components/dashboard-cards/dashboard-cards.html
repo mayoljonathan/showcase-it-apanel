@@ -1,0 +1,197 @@
+<!--USERS-->
+<ion-card *ngIf="card.id==='users'">
+  <ion-card-header>
+    Online Accounts
+    <span float-right>
+      <ion-badge>{{accounts.user?.length + accounts.admin?.length}}</ion-badge>
+    </span>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-segment [(ngModel)]="accountSegmentSelected" color="primary" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="users">
+        Users ({{accounts.user?.length ? accounts.user?.length : 0}})
+      </ion-segment-button>
+      <ion-segment-button value="admins">
+        Administrators ({{accounts.admin?.length ? accounts.admin?.length : 0}})
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [hidden]="accountSegmentSelected != 'users'">
+      <div class="flex-hv account-container" *ngIf="accounts.user?.length===0">There are no online users</div>
+      <ion-scroll *ngIf="accounts.user?.length > 0" class="account-container" scrollY="true">
+        <ion-list>
+          <ion-item *ngFor="let user of accounts.user" tappable class="item-hover user-item" (click)="navigateToUser(user.uid)">
+            <img [src]="user?.photoURL || 'assets/images/user-placeholder.png'" alt="" class="account-photo mright-10">
+            <span class="size-14">{{user?.name}}</span>
+          </ion-item>
+        </ion-list>
+      </ion-scroll>
+    </div>
+
+    <div [hidden]="accountSegmentSelected != 'admins'">
+      <div class="flex-hv account-container" *ngIf="accounts.admin?.length===0">There are no online administrators</div>
+      <ion-scroll *ngIf="accounts.admin?.length > 0" class="account-container" scrollY="true">
+        <ion-list>
+          <ion-item *ngFor="let admin of accounts.admin" tappable class="item-hover user-item">
+            <img [src]="admin?.photoURL || 'assets/images/user-placeholder.png'" alt="" class="account-photo mright-10">
+            <span class="size-13">{{admin?.name}}</span>
+          </ion-item>
+        </ion-list>
+      </ion-scroll>
+    </div>
+
+  </ion-card-content>
+</ion-card>
+
+<!--HIGHEST RATED-->
+<ion-card *ngIf="card.id==='highest_rated'">
+  <ion-card-header>
+    Highest Rated Apps
+  </ion-card-header>
+  <ion-card-content class="apps-card-content">
+    <div class="flex-hv apps-container" *ngIf="!appStats?.ratings_reviews || appStats?.ratings_reviews?.length===0">No data available</div>
+    <ion-scroll *ngIf="appStats?.ratings_reviews && appStats?.ratings_reviews?.length > 0" class="app-stats-scroller" scrollY="true">
+      <ion-list>
+        <ion-item *ngFor="let app of appStats?.ratings_reviews;let i=index" tappable class="item-hover app-item" (click)="navigateToApp(app?.appData?.uid)">
+          <span class="mright-5" item-left>{{i+1}}.</span>
+          <img [src]="app?.appData?.thumbIconURL ? app?.appData?.thumbIconURL : app?.appData?.iconURL" alt="" class="app-icon mright-10">
+          <span class="size-14">{{app?.appData?.title}}</span>
+          <span class="flex-v" item-right>{{app?.stars.toFixed(1)}}<ion-icon name="md-star" color="primary" class="mleft-5"></ion-icon></span>
+        </ion-item>
+      </ion-list>
+    </ion-scroll>
+  </ion-card-content>
+</ion-card>
+
+<!--MOST VIEWED-->
+<ion-card *ngIf="card.id==='most_viewed'">
+  <ion-card-header>
+    Most Viewed Apps
+  </ion-card-header>
+  <ion-card-content class="apps-card-content">
+    <div class="flex-hv apps-container" *ngIf="!appStats?.most_viewed || appStats?.most_viewed?.length===0">No data available</div>
+    <ion-scroll *ngIf="appStats?.most_viewed && appStats?.most_viewed?.length > 0" class="app-stats-scroller" scrollY="true">
+      <ion-list>
+        <ion-item *ngFor="let app of appStats?.most_viewed;let i=index" tappable class="item-hover app-item" (click)="navigateToApp(app?.appData?.uid)">
+          <span class="mright-5" item-left>{{i+1}}.</span>
+          <img [src]="app?.appData?.thumbIconURL ? app?.appData?.thumbIconURL : app?.appData?.iconURL" alt="" class="app-icon mright-10">
+          <span class="size-14">{{app?.appData?.title}}</span>
+          <span class="flex-v" item-right>{{app?.viewCount}}<ion-icon name="md-eye" class="mleft-5"></ion-icon></span>
+        </ion-item>
+      </ion-list>
+    </ion-scroll>
+  </ion-card-content>
+</ion-card>
+
+<!--MOST DOWNLOADED-->
+<ion-card *ngIf="card.id==='most_downloaded'">
+  <ion-card-header>
+    Most Downloaded Apps
+  </ion-card-header>
+  <ion-card-content class="apps-card-content">
+    
+    <ion-segment [(ngModel)]="platformSelected" color="primary" (ionChange)="platformChanged($event)">
+      <ion-segment-button value="overall">Overall</ion-segment-button>
+      <ion-segment-button value="android"><ion-icon name="logo-android" color="android"></ion-icon></ion-segment-button>
+      <ion-segment-button value="desktop"><ion-icon name="md-desktop" color="web_app"></ion-icon></ion-segment-button>
+      <ion-segment-button value="source_code"><ion-icon name="md-code-download" color="primary"></ion-icon></ion-segment-button>
+    </ion-segment>
+
+    <div [hidden]="platformSelected != 'overall'">
+      <div class="flex-hv account-container" *ngIf="!appStats?.most_downloaded || appStats?.most_downloaded[platformSelected]?.length === 0">No data available</div>
+      <ion-scroll *ngIf="appStats?.most_downloaded[platformSelected] && appStats?.most_downloaded[platformSelected]?.length > 0" class="app-stats-scroller" scrollY="true">
+        <ion-list>
+          <ion-item *ngFor="let app of appStats?.most_downloaded[platformSelected];let i=index" tappable class="item-hover app-item" (click)="navigateToApp(app?.appData?.uid)">
+            <span class="mright-5" item-left>{{i+1}}.</span>
+            <img [src]="app?.appData?.thumbIconURL ? app?.appData?.thumbIconURL : app?.appData?.iconURL" alt="" class="app-icon mright-10">
+            <span class="size-14">{{app?.appData?.title}}</span>
+            <span class="flex-v" item-right>{{app?.downloadsObj?.totalDownloads}}<ion-icon name="md-download" class="mleft-5"></ion-icon></span>
+          </ion-item>
+        </ion-list>
+      </ion-scroll>
+    </div>
+
+    <div [hidden]="platformSelected != 'android'">
+      <div class="flex-hv account-container" *ngIf="!appStats?.most_downloaded || appStats?.most_downloaded[platformSelected]?.length === 0">No data available</div>
+      <ion-scroll *ngIf="appStats?.most_downloaded[platformSelected] && appStats?.most_downloaded[platformSelected]?.length > 0" class="app-stats-scroller" scrollY="true">
+        <ion-list>
+          <ion-item *ngFor="let app of appStats?.most_downloaded[platformSelected];let i=index" tappable class="item-hover app-item" (click)="navigateToApp(app?.appData?.uid)">
+            <span class="mright-5" item-left>{{i+1}}.</span>
+            <img [src]="app?.appData?.thumbIconURL ? app?.appData?.thumbIconURL : app?.appData?.iconURL" alt="" class="app-icon mright-10">
+            <span class="size-14">{{app?.appData?.title}}</span>
+            <span class="flex-v" item-right>{{app?.downloadsObj?.android}}<ion-icon name="md-download" class="mleft-5"></ion-icon></span>
+          </ion-item>
+        </ion-list>
+      </ion-scroll>
+    </div>
+
+    <div [hidden]="platformSelected != 'desktop'">
+      <div class="flex-hv account-container" *ngIf="!appStats?.most_downloaded || appStats?.most_downloaded[platformSelected]?.length === 0">No data available</div>
+      <ion-scroll *ngIf="appStats?.most_downloaded[platformSelected] && appStats?.most_downloaded[platformSelected]?.length > 0" class="app-stats-scroller" scrollY="true">
+        <ion-list>
+          <ion-item *ngFor="let app of appStats?.most_downloaded[platformSelected];let i=index" tappable class="item-hover app-item" (click)="navigateToApp(app?.appData?.uid)">
+            <span class="mright-5" item-left>{{i+1}}.</span>
+            <img [src]="app?.appData?.thumbIconURL ? app?.appData?.thumbIconURL : app?.appData?.iconURL" alt="" class="app-icon mright-10">
+            <span class="size-14">{{app?.appData?.title}}</span>
+            <span class="flex-v" item-right>{{app?.downloadsObj?.desktop}}<ion-icon name="md-download" class="mleft-5"></ion-icon></span>
+          </ion-item>
+        </ion-list>
+      </ion-scroll>
+    </div>
+
+    <div [hidden]="platformSelected != 'source_code'">
+      <div class="flex-hv account-container" *ngIf="!appStats?.most_downloaded || appStats?.most_downloaded[platformSelected]?.length === 0">No data available</div>
+      <ion-scroll *ngIf="appStats?.most_downloaded[platformSelected] && appStats?.most_downloaded[platformSelected]?.length > 0" class="app-stats-scroller" scrollY="true">
+        <ion-list>
+          <ion-item *ngFor="let app of appStats?.most_downloaded[platformSelected];let i=index" tappable class="item-hover app-item" (click)="navigateToApp(app?.appData?.uid)">
+            <span class="mright-5" item-left>{{i+1}}.</span>
+            <img [src]="app?.appData?.thumbIconURL ? app?.appData?.thumbIconURL : app?.appData?.iconURL" alt="" class="app-icon mright-10">
+            <span class="size-14">{{app?.appData?.title}}</span>
+            <span class="flex-v" item-right>{{app?.downloadsObj?.source_code}}<ion-icon name="md-download" class="mleft-5"></ion-icon></span>
+          </ion-item>
+        </ion-list>
+      </ion-scroll>
+    </div>
+
+  </ion-card-content>
+</ion-card>
+
+<!--APP,USER SYNC-->
+<ion-card *ngIf="card.id==='algolia_api'">
+  <ion-card-header>
+    Firebase to Algolia Latest Sync
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item class="firebase-to-algolia">
+        <ion-icon name="md-apps" item-start></ion-icon> <span class="size-14">Applications</span>
+        <span item-end class="size-13">{{algolia?.applications_sync ? (algolia?.applications_sync | timeFromNow) : ''}}</span>
+      </ion-item>
+      <ion-item class="firebase-to-algolia">
+        <ion-icon name="md-contacts" item-start></ion-icon> <span class="size-14">Users</span>
+        <span item-end class="size-13">{{algolia?.users_sync ? (algolia?.users_sync | timeFromNow) : ''}}</span>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
+
+<!--LATEST SEARCH QUERIES-->
+<ion-card *ngIf="card.id==='algolia_logs'">
+  <ion-card-header>
+    Latest Search Queries
+    <span float-right>
+      <ion-badge>{{searchLogs?.length}}</ion-badge>
+    </span>
+  </ion-card-header>
+  <ion-card-content class="apps-card-content">
+    <div class="flex-hv apps-container" *ngIf="searchLogs?.length===0">No data available</div>
+    <ion-scroll *ngIf="searchLogs && searchLogs?.length > 0" class="app-stats-scroller" scrollY="true">
+      <ion-list>
+        <ion-item *ngFor="let log of searchLogs;let i=index" class="item-hover app-item">
+          <span class="size-14" *ngIf="log?.query">A user searched for <b>{{log?.query}}</b></span>
+          <span class="size-14" item-end>{{log?.timestamp ? (log?.timestamp | timeFromNow) : ''}}</span>
+        </ion-item>
+      </ion-list>
+    </ion-scroll>
+  </ion-card-content>
+</ion-card>

@@ -1,0 +1,55 @@
+<ion-content class="bg">
+  <div class="flex-hv full-height" *ngIf="!problems">
+    <div class="loader"></div>
+  </div>
+
+  <!--Empty problems-->
+  <div padding class="container center" *ngIf="problems && problems?.length == 0">
+    <ion-card class="app-container scroll-x">
+      <div class="flex-hv h-300">
+        <div>
+          <ion-icon name="md-checkmark-circle-outline" class="large-icon flex-h"></ion-icon>
+          <h2 class="size-16" text-wrap text-center>There are no reported problems at the moment.</h2>
+        </div>
+      </div>
+    </ion-card>
+  </div>
+
+  <!--With problems-->
+  <div padding class="container center" *ngIf="problems && problems?.length != 0">
+    <ion-card class="app-container scroll-x">
+      <table class="full-width">
+        <thead class="th-bg">
+          <th width="100">Email</th>
+          <th>Message</th>
+          <th text-center width="150" style="min-width:150px;">Date Reported</th>
+          <th width="40"></th>
+        </thead>
+        <tbody>
+          <tr class="table-row" *ngFor="let p of (problems | sort: 'dateReported':'desc');let i=index" padding tappable>
+            <td (click)='navigateToProblem(p)'>
+              <span class="app-title">{{p?.email}}</span>
+            </td>
+            <td (click)='navigateToProblem(p)'>
+              <span class="bold problem">{{p?.problem}}</span>
+            </td>
+            <td text-center (click)='navigateToProblem(p)'>
+              <span>{{p?.dateReported | toFullDateAndTime}} ({{p?.dateReported | timeFromNow}})</span>
+            </td>
+            <td>
+              <div class="flex-hv">
+                <button ion-button clear small icon-only (click)="emailUser(p)">
+                  <ion-icon name="md-mail" class="size-20" tappable></ion-icon>
+                </button>
+                <button ion-button clear small icon-only (click)="deleteProblem(p)">
+                  <ion-icon name="md-trash" color='danger' class="size-20" tappable></ion-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-card>
+  </div>
+  
+</ion-content>

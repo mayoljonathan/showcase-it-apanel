@@ -1,0 +1,332 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{app?.appData?.title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content *ngIf="loadedPage" class="bg">
+
+  <div *ngIf="type === 'content_update_requests'" class="readOnly flex-hv" [ngClass]="viewingNewData ? 'primary':'dark'" (click)="toggleCUData()" tappable>
+    <span class="white">You are viewing the {{viewingNewData ? 'current content update':'old'}} data. Click me to toggle.</span>
+  </div>
+
+  <div *ngIf="readOnly" class="readOnly flex-hv" [ngClass]="statusColor(app?.action)" (click)="viewMoreInfo()" tappable>
+    <span class="white">
+      <span class="bold" text-capitalize>[{{app?.request_type === 'publish_request' ? 'Publish Request' : 'Content Update'}}] {{actionName(app?.action)}}</span> by 
+      <span class="bold">{{app?.adminData?.name}}</span>
+    </span>
+  </div>
+
+  <div id="backdrop" *ngIf="fabButtonOpened && !readOnly"></div> 
+  <ion-fab *ngIf="!readOnly && viewingNewData" #fab [class]="showFab ? 'onShowFab' : 'onHideFab'" bottom right>
+    <button ion-fab (click)="onFabShowClick(fab)">
+      <ion-icon color="white" name="md-more"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab color="primary" (click)="onFabShowClick(fab,1)">
+        <ion-icon name="md-checkmark" color="white"></ion-icon>
+        <div class="label primary-text">Approve</div>
+      </button>
+      <button ion-fab color="primary" (click)="onFabShowClick(fab,2)">
+        <ion-icon name="md-remove" color="white"></ion-icon>
+        <div class="label primary-text">Reject</div>
+      </button>
+      <button ion-fab color="primary" (click)="onFabShowClick(fab,3)">
+        <ion-icon name="md-trash" color="white"></ion-icon>
+        <div class="label primary-text">Reject & Remove</div>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <div padding class="container center">
+    <ion-card>
+      <!--BASIC-->
+      <ion-row padding class="no-padbottom">
+        <ion-col col-auto>
+          <div class="app-icon-placeholder" id="app-icon-placeholder">
+            <img [src]="app?.appData?.thumbIconURL || app?.appData?.iconURL" alt="" (load)="loadedAppIcon(i)" class="app-icon" tappable imageViewer>
+          </div>
+        </ion-col>
+        <ion-col style="min-width: 250px">
+          <div class="flex-dc">
+            <div class="flex-item">
+              <h2 class="app-title bold">{{app?.appData?.title}}</h2>
+            </div>
+            <div class="flex-item">
+              Type / Category: <span text-capitalize class="mleft-5 bold">{{app?.appData?.type}} / {{app?.appData?.category_name}}</span>
+            </div>
+            <div class="flex-item">
+              <div class="flex-v">
+                <span class="mright-5">Platforms: </span>
+                <ion-icon *ngIf="app?.appData?.platforms && app?.appData?.platforms?.web?.isCompatible" name="md-globe" class="mright-10 size-24"></ion-icon>
+                <ion-icon *ngIf="app?.appData?.platforms && app?.appData?.platforms?.android?.isCompatible" name="logo-android" color="android" class="mright-10 size-24"></ion-icon>
+                <ion-icon *ngIf="app?.appData?.platforms && app?.appData?.platforms?.desktop?.isCompatible" name="md-desktop" class="size-24"></ion-icon>
+              </div>
+            </div>
+            <div class="flex-item">
+              <div class="flex-v">
+                <span class="mright-5">Date requested: </span>
+                <span class="bold" *ngIf="viewingNewData && type === 'publish_requests'">{{app?.dateCreated | toFullDateAndTime}} <span>({{app?.dateCreated | timeFromNow}})</span></span> 
+                <span class="bold" *ngIf="viewingNewData && type != 'publish_requests'">{{app?.appData?.cu_request_dateCreated | toFullDateAndTime}} <span>({{app?.appData?.cu_request_dateCreated | timeFromNow}})</span></span> 
+                <span class="bold" *ngIf="!viewingNewData">{{app?.appData?.cu_request_dateCreated ? (app?.appData?.cu_request_dateCreated | toFullDateAndTime) : (app?.appData?.datePublished | toFullDateAndTime)}} <span>({{app?.appData?.cu_request_dateCreated ? (app?.appData?.cu_request_dateCreated | timeFromNow) : (app?.appData?.datePublished | timeFromNow)}})</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="flex-item">
+            <div class="flex-v">
+              <span class="mright-5">Created by: </span>
+              <span tappable (click)="navigateToUser(app?.userData?.uid)" class="owner-name bold">{{app?.userData?.name}}</span>
+              <img tappable (click)="navigateToUser(app?.userData?.uid)" [src]="app?.userData?.photoURL" alt="" class="owner-img">
+            </div>
+          </div>
+        </ion-col>
+        <ion-col col-auto id="actionsContainer" *ngIf="!readOnly && viewingNewData">
+          <button ion-button (click)="requestAction(1)">Approve</button>
+          <button ion-button (click)="requestAction(2)" color="danger">Reject</button>
+          <button ion-button (click)="requestAction(3)" color="danger">Reject & Remove app</button>
+        </ion-col>
+      </ion-row>
+     
+      <!--TAGS eg. Opensource, Downloadable-->
+      <ion-row padding-left>
+        <div class="flex-h">
+          <div class="flex-item">
+            <ion-chip tappable (click)="scrollTo('os')" *ngIf="app?.appData?.openSource && (app?.appData?.openSource?.sourceCodeDownloadURL || app?.appData?.openSource?.sourceCodeURL)">
+              <ion-icon class="size-24" name="md-code-download"></ion-icon>
+              <ion-label>Open Source</ion-label>
+            </ion-chip>
+            <ion-chip tappable (click)="scrollTo('web')" *ngIf="app?.appData?.platforms?.web?.demoURL">
+              <ion-icon class="size-24" name="md-globe"></ion-icon>
+              <ion-label>Web App Previewable</ion-label>
+            </ion-chip>
+            <ion-chip tappable (click)="scrollTo('android')" *ngIf="app?.appData?.platforms?.android?.demoURL || app?.appData?.platforms?.android.releases?.length>0">
+              <ion-icon class="size-24" name="logo-android"></ion-icon>
+              <ion-label>Android App Downloadable</ion-label>
+            </ion-chip>
+            <ion-chip tappable (click)="scrollTo('desktop')" *ngIf="app?.appData?.platforms?.desktop?.demoURL || app?.appData?.platforms?.desktop?.demoDownloadURL ">
+              <ion-icon class="size-24" name="md-desktop"></ion-icon>
+              <ion-label>Desktop App Downloadable</ion-label>
+            </ion-chip>
+          </div>
+        </div>
+      </ion-row>
+
+      <ion-row padding-left margin-top class="mleft-5" *ngIf="app?.appData?.website || app?.appData?.email">
+        <h2 class="bold">Contact</h2>
+      </ion-row>
+      <ion-row padding-left class="mleft-5" *ngIf="app?.appData?.website || app?.appData?.email">
+        <ion-col text-wrap no-padding col-12 col-sm-12 col-md-12 col-lg-12 *ngIf="app?.appData?.website">
+          <span class="mright-5">Website:</span>
+          <span tappable (click)="launchURL(app?.appData?.website)" class="bold link">{{app?.appData?.website}}</span>
+          <button ion-button clear small icon-only (click)="launchURL(app?.appData?.website)">
+            <ion-icon md-name="open_in_new" class="size-20" tappable></ion-icon>
+          </button>
+        </ion-col>
+
+        <ion-col text-wrap no-padding col-12 col-sm-12 col-md-12 col-lg-12 *ngIf="app?.appData?.email">
+          <span class="mright-5">Email address:</span>
+          <span tappable (click)="launchEmail(app?.appData?.email)" class="bold link mright-5">{{app?.appData?.email}}</span>
+          <button ion-button clear small icon-only (click)="copyText(app?.appData?.email)">
+            <ion-icon md-name="content_copy" class="size-20" tappable></ion-icon>
+          </button>
+        </ion-col>
+
+        <!--<div class="flex-dc">
+          <div class="flex-item" *ngIf="app?.appData.website">
+            <div class="flex-v">
+              <span class="mright-5">Website:</span>
+              <span tappable (click)="launchURL(app?.appData.website)" class="bold link">{{app?.appData.website}}</span>
+              <button ion-button clear small icon-only (click)="launchURL(app?.appData.website)">
+                <ion-icon md-name="open_in_new" class="size-20" tappable></ion-icon>
+              </button>
+            </div>
+          </div>
+          <div class="flex-item" *ngIf="app?.appData.email">
+            <div class="flex-v">
+              <span class="mright-5">Email address:</span>
+              <span tappable (click)="launchEmail(app?.appData.email)" class="bold link mright-5">{{app?.appData.email}}</span>
+              <button ion-button clear small icon-only (click)="copyText(app.appData.email)">
+                <ion-icon md-name="content_copy" class="size-20" tappable></ion-icon>
+              </button>
+            </div>
+          </div>
+        </div>-->
+      </ion-row>
+
+
+      <!--SCREENSHOTS-->
+      <ion-row>
+        <div padding>
+          <h2 class="pad-5 bold">Screenshots <ion-badge color="primary">{{app?.appData?.screenshots?.length}}</ion-badge></h2>
+        </div>
+        <div class="ss-parent-container">
+          <div *ngFor="let s of app?.appData?.screenshots;let i=index" [id]="'shimmer-'+i" class="screenshot-placeholder shimmer mright-5">
+            <img [src]="s?.low_res" alt="" class="screenshot" (load)="onScreenshotLoaded(i)" tappable imageViewer>
+          </div>
+        </div>
+      </ion-row>
+
+      <!--DESCRIPTION-->
+      <ion-row padding class="d-block">
+        <div>
+          <h2 class="bold">Short description</h2>
+          <p class="pre-line">{{app?.appData?.short_description}}</p>
+        </div>
+        <div margin-top>
+          <h2 class="bold">Full description</h2>
+          <p class="pre-line">{{app?.appData?.full_description}}</p>
+        </div>
+      </ion-row>
+
+      <!--PLATFORMS-->
+      <!--WEB-->
+      <ion-item class="section" id="section-web" padding-left *ngIf="app?.appData?.platforms?.web.demoURL">
+        <h2 class="bold white">Web</h2>
+      </ion-item>
+      <ion-row padding  *ngIf="app?.appData?.platforms?.web.demoURL">
+        <div class="full-width">
+          <h3 class="bold">Web App URL</h3>
+          <div class="flex">
+            <span class="bold link flex-v" text-wrap tappable (click)="launchURL(app?.appData?.platforms?.web.demoURL)">{{app?.appData?.platforms?.web.demoURL}}</span>
+            <button ion-button clear small icon-only (click)="launchURL(app?.appData?.platforms?.web.demoURL)">
+              <ion-icon md-name="open_in_new" class="size-20" tappable></ion-icon>
+            </button>
+          </div>
+        </div>
+      </ion-row>
+
+      <!--DESKTOP-->
+      <ion-item class="section" id="section-desktop" padding-left *ngIf="app?.appData?.platforms?.desktop.demoURL || app?.appData?.platforms?.desktop.demoDownloadURL">
+        <h2 class="bold white">Desktop</h2>
+      </ion-item>
+      <ion-row padding *ngIf="app?.appData?.platforms?.desktop.demoURL || app?.appData?.platforms?.desktop.demoDownloadURL">
+        <div class="full-width" *ngIf="app?.appData?.platforms?.desktop.demoURL">
+          <h3 class="bold">External download URL</h3>
+          <div class="flex">
+            <span class="bold link flex-v" text-wrap tappable (click)="launchURL(app?.appData?.platforms?.desktop.demoURL)">{{app?.appData?.platforms?.desktop.demoURL}}</span>
+            <button ion-button clear small icon-only (click)="launchURL(app?.appData?.platforms?.desktop.demoURL)">
+              <ion-icon md-name="open_in_new" class="size-20" tappable></ion-icon>
+            </button>
+          </div>
+        </div>
+        <div class="full-width mtop-10" *ngIf="app?.appData?.platforms?.desktop.demoDownloadURL">
+          <h3 class="bold">Internal archive</h3>
+          <div class="os-container flex scroll-x">
+            <div class="flex">
+              <ion-col col-auto class="flex-hv pad-20">
+                <ion-icon name="md-filing" color="primary" class="medium-icon"></ion-icon>
+              </ion-col>
+              <ion-row class="flex-h flex-dc">
+                <span class="bold size-16">{{app?.appData?.platforms?.desktop?.demoFilename}}</span>
+                <span>Size: {{app?.appData?.platforms?.desktop.demoFileSize | fileSize}}</span>
+                <span>Uploaded on: {{app?.appData?.platforms?.desktop.dateCreated | toFullDateAndTime}}</span>
+                <div class="flex">
+                  <button ion-button (click)="downloadFile(app?.appData?.platforms?.desktop.demoDownloadURL)">Download</button>
+                  <button *ngIf="!readOnly" ion-button color="danger" (click)="removeFile('remove_desktop_archive')">Remove</button>
+                </div>
+              </ion-row>
+            </div>
+          </div>
+        </div>
+      </ion-row>
+
+      <!--ANDROID-->
+      <ion-item class="section" id="section-android" padding-left *ngIf="app?.appData?.platforms?.android.demoURL || app?.appData?.platforms?.android.releases">
+        <h2 class="bold white">Android</h2>
+      </ion-item>
+      <ion-row padding *ngIf="app?.appData?.platforms?.android.demoURL || app?.appData?.platforms?.android.releases">
+        <div class="full-width" *ngIf="app?.appData?.platforms?.android.demoURL">
+          <h3 class="bold">External download URL</h3>
+          <div class="flex">
+            <span class="bold link flex-v" text-wrap tappable (click)="launchURL(app?.appData?.platforms?.android.demoURL)">{{app?.appData?.platforms?.android.demoURL}}</span>
+            <button ion-button clear small icon-only (click)="launchURL(app?.appData?.platforms?.android.demoURL)">
+              <ion-icon md-name="open_in_new" class="size-20" tappable></ion-icon>
+            </button>
+          </div>
+        </div>
+        <div class="full-width mtop-10" *ngIf="app?.appData?.platforms?.android.releases">
+          <h3 class="bold">Package name</h3>
+          <span text-wrap>{{(app?.appData?.platforms?.android.releases|objToArr)[0]?.packageName}}</span>
+          <h3 class="bold mtop-10">Releases <ion-badge color="primary">{{(app?.appData?.platforms?.android.releases | objToArr)?.length}}</ion-badge></h3>
+          <div class="os-container scroll-x">
+            <table class="full-width center">
+              <thead>
+                <tr>
+                  <th text-left>Release name</th>
+                  <th text-center>Version name</th>
+                  <th text-center>Version code</th>
+                  <th text-center>Size</th>
+                  <th text-center>Uploaded on</th>
+                  <th width="40"></th>
+                  <th width="40" *ngIf="!readOnly"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="app-row" *ngFor="let release of (app?.appData?.platforms?.android.releases | objToArr);let i=index" text-wrap no-padding tappable>
+                  <td text-left (click)='viewRelease(release)'>
+                    <span>{{release.releaseName ? release.releaseName : release.versionName }}</span>
+                  </td>
+                  <td text-center (click)='viewRelease(release)'>
+                    {{release.versionName}}
+                  </td>
+                  <td text-center (click)='viewRelease(release)'>
+                    {{release.versionCode}}
+                  </td>
+                  <td text-center (click)='viewRelease(release)'>
+                    {{release.demoFileSize | fileSize}}
+                  </td>
+                  <td text-center (click)='viewRelease(release)'>{{release.dateCreated ? (release.dateCreated | toFullDateAndTime) : ''}}</td>
+                  <td text-center (click)="downloadFile(release.demoDownloadURL)">
+                    <ion-icon name="md-download"></ion-icon>
+                  </td>
+                  <td text-center (click)="deleteRelease(release)" *ngIf="!readOnly">
+                    <ion-icon name="md-trash" color="danger"></ion-icon>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </ion-row>
+
+
+      <!--OPENSOURCE-->
+      <ion-item class="section" id="section-os" padding-left *ngIf="app?.appData?.openSource && (app?.appData?.openSource?.sourceCodeURL || app?.appData?.openSource?.sourceCodeDownloadURL)">
+        <h2 class="bold white">Source Code</h2>
+      </ion-item>
+      <ion-row padding *ngIf="app?.appData?.openSource">
+        <div class="full-width" *ngIf="app?.appData?.openSource.sourceCodeURL">
+          <h3 class="bold">External source code URL</h3>
+          <div class="flex">
+            <span class="bold link flex-v" text-wrap tappable (click)="launchURL(app?.appData?.openSource.sourceCodeURL)">{{app?.appData?.openSource?.sourceCodeURL}}</span>
+            <button ion-button clear small icon-only (click)="launchURL(app?.appData?.openSource.sourceCodeURL)">
+              <ion-icon md-name="open_in_new" class="size-20" tappable></ion-icon>
+            </button>
+          </div>
+        </div>
+        <div class="full-width mtop-10" *ngIf="app?.appData?.openSource?.sourceCodeDownloadURL">
+          <h3 class="bold">Internal source code</h3>
+          <div class="os-container flex scroll-x">
+            <div class="flex">
+              <ion-col col-auto class="flex-hv pad-20">
+                <ion-icon name="md-filing" color="primary" class="medium-icon"></ion-icon>
+              </ion-col>
+              <ion-row class="flex-h flex-dc">
+                <span class="bold size-16">{{app?.appData?.openSource?.sourceCodeFilename}}</span>
+                <span>Size: {{app?.appData?.openSource?.sourceCodeFilesize | fileSize}}</span>
+                <span>Uploaded on: {{app?.appData?.openSource?.dateCreated | toFullDateAndTime}}</span>
+                <div class="flex">
+                  <button ion-button (click)="downloadFile(app?.appData?.openSource?.sourceCodeDownloadURL)">Download</button>
+                  <button ion-button *ngIf="!readOnly" color="danger" (click)="removeFile('remove_os_archive')">Remove</button>
+                </div>
+              </ion-row>
+            </div>
+          </div>
+        </div>
+      </ion-row>
+
+    </ion-card>
+  </div>
+
+</ion-content>

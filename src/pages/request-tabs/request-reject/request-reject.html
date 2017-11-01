@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title *ngIf="!logInfo">{{action == 2 ? 'Reject request' : 'Reject and remove app'}}</ion-title>
+    <ion-title *ngIf="logInfo">Information</ion-title>
+		<ion-buttons end>
+			<button ion-button (click)="dismiss()">
+				<ion-icon name="close" color="white"></ion-icon>
+			</button>
+		</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!--REJECTING/REMOVING THE REQUEST-->
+<ion-content padding *ngIf="!logInfo">
+  <ion-row>
+    <p no-margin>You are about to {{action == 2 ? 'reject' : 'reject and remove'}} <span class="bold">{{app?.appData.title}}.</span>
+      <span *ngIf="action == 3">This app will be deleted from the applications list of the owner.</span>
+    </p>
+  </ion-row>
+
+  <div class="separator mtop-10"></div>
+
+  <p>Reason/s for rejecting:</p>
+  <div padding class="box-info full-width flex-hv" *ngIf="selectedReasons.length == 0">No reason/s selected.</div>
+  <div *ngFor="let reason of selectedReasons">
+    <span>
+      <span class="bold">{{reason.name}}</span> - 
+      <span>{{reason.message}}</span>
+    </span>
+  </div>
+
+  <ion-buttons margin-top right>
+    <button ion-button color="light" (click)="selectReasons()">Select Reasons</button>
+    <button ion-button [disabled]="selectedReasons.length == 0" (click)="submitReject()">Submit</button>
+  </ion-buttons>
+</ion-content>
+
+<!--READING MORE INFORMATIONS ABOUT THE REQUEST-->
+<ion-content padding *ngIf="logInfo">
+  <ion-row class="d-block">
+    <div class="bold">[{{app?.request_type === 'publish_request' ? 'Publish Request' : 'Content Update'}}]</div>
+    <div>The request was 
+      <span *ngIf="action === 'approve' || action === 'approve_cu'"> approved.</span>
+      <span *ngIf="action !== 'approve' && action !== 'approve_cu'">
+        <span class="bold">{{action == 'reject' ? 'rejected.' : 'rejected and removed'}}</span> {{action == 'reject_remove' ? 'the app from the applications list of the owner.':''}}
+      </span>
+    </div>
+    <div class="flex-v mtop-5">
+      <span>{{action !== 'approve' && action !== 'approve_cu' ? 'Rejected':'Approved'}} by:</span>
+      <div class="flex-v">
+        <span class="admin-name bold mright-10">{{app.adminData?.name}}</span>
+        <div class="admin-img-placeholder" id="admin-img-placeholder">
+          <img [src]="app.adminData?.photoURL || '../assets/icon/user-placeholder.png'" alt="" class="admin-img" (load)="loadedAdminImg(i)">
+        </div>
+      </div>
+    </div>
+    <div class="flex-v">
+      Date {{action !== 'approve' && action !== 'approve_cu' ? 'rejected':'approved'}}: <span class="mleft-5 bold">{{app?.log_dateCreated | toFullDateAndTime}}</span>
+    </div>
+  </ion-row>
+
+  <div *ngIf="action !== 'approve' && action !== 'approve_cu'" class="separator mtop-10"></div>
+
+  <div *ngIf="action !== 'approve' && action !== 'approve_cu'">
+    <p>Reason/s for rejecting:</p>
+    <div *ngFor="let reason of app.reject_reasons">
+      <span>
+        <span class="bold">{{reason.name}}</span> - 
+        <span>{{reason.message}}</span>
+      </span>
+    </div>
+  </div>
+
+</ion-content>

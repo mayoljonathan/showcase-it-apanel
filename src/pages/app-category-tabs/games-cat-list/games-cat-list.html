@@ -1,0 +1,65 @@
+<ion-content class="bg">
+  <div class="flex-hv full-height" *ngIf="!categories;else loadedData">
+    <div class="loader"></div>
+  </div>
+
+  <ng-template #loadedData>
+    <div padding class="container center">
+      <ion-card class="table-card-container">
+        <ion-row class="th-bg separator-bot">
+          <ion-col no-padding class="flex-hv">
+            <ion-item class="th-bg">
+              <ion-icon name="md-search" item-start></ion-icon>
+              <ion-input #searchBarInput placeholder="Search categories" clearInput></ion-input>
+            </ion-item>
+          </ion-col>
+          
+          <ion-col col-auto>
+            <button ion-button (click)="showAddCategory(false)">Add Category</button>
+          </ion-col>
+        </ion-row>
+
+        <div class="flex-hv h-300" *ngIf="categories && categories?.length == 0">
+          <div>
+            <ion-icon md-name="filter_none" class="large-icon flex-h"></ion-icon>
+            <h2 class="size-18">There are currently no categories in the games type.</h2>
+          </div>
+        </div>
+        
+        <ion-row class="scroll-x" *ngIf="categories && categories?.length > 0">
+          <table class="full-width">
+            <thead class="th-bg">
+              <th>Category</th>
+              <th>Date created</th>
+              <th text-center>No. of apps</th>
+              <th width="50" text-center>Status</th>
+              <th width="40"></th>
+            </thead>
+            <tbody>
+              <tr class="table-row" *ngFor="let c of (categories | sort:'name':'asc' | filter: searchBarInput.value:'name')" padding tappable>
+                <td (click)='navigateToCategory(c)'>{{c?.name}}</td>
+                <td (click)='navigateToCategory(c)'>{{c?.dateCreated | toFullDateAndTime}}</td>
+                <td text-center (click)='navigateToCategory(c)'>{{c?.appCount ? c?.appCount : '0'}}</td>
+                <td class="flex-h" (click)='navigateToCategory(c)'>
+                  <ion-toggle [checked]='c.status == 1' (ionChange)="onChangeStatus($event.value,i)"></ion-toggle>
+                </td>
+                <td (click)='showAddCategory(true,c.uid,c.name)'>
+                  <ion-icon name="md-create"></ion-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-row>
+
+        <div class="flex-hv h-300" *ngIf="categories?.length!=0 && (categories | filter: searchBarInput.value:'name')?.length === 0">
+          <div>
+            <ion-icon md-name="search" class="large-icon flex-h"></ion-icon>
+            <h2 class="size-18">No categories matched in your search query.</h2>
+          </div>
+        </div>
+
+      </ion-card>
+    </div>
+  </ng-template>
+  
+</ion-content>

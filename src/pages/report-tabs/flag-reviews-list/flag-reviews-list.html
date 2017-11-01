@@ -1,0 +1,58 @@
+<ion-content class="bg">
+  <div class="flex-hv full-height" *ngIf="!flagReviews">
+    <div class="loader"></div>
+  </div>
+
+  <!--Empty flagReviews-->
+  <div padding class="container center" *ngIf="flagReviews && flagReviews?.length == 0">
+    <ion-card class="app-container scroll-x">
+      <div class="flex-hv h-300">
+        <div>
+          <ion-icon name="md-checkmark-circle-outline" class="large-icon flex-h"></ion-icon>
+          <h2 class="size-16" text-wrap text-center>There are no flag reviews at the moment.</h2>
+        </div>
+      </div>
+    </ion-card>
+  </div>
+
+  <!--With flagReviews-->
+  <div padding class="container center" *ngIf="flagReviews && flagReviews?.length != 0">
+    <ion-card class="app-container scroll-x">
+      <table class="full-width">
+        <thead class="th-bg">
+          <th>App name</th>
+          <th>Owner</th>
+          <th text-center>No. of flagged reviews</th>
+          <th text-center>Date last flagged</th>
+        </thead>
+        <tbody>
+          <tr class="table-row" *ngFor="let f of flagReviews;let i=index" padding tappable>
+            <td (click)='navigateToApp(f)'>
+              <div class="flex-v">
+                <div class="app-icon-placeholder" [id]="'app-icon-placeholder-'+i">
+                  <img [src]="f.appData?.thumbIconURL" alt="" (load)="loadedAppIcon(i)" class="app-icon">
+                </div>
+                <span class="app-title">{{f.appData?.title}}</span>
+              </div>
+            </td>
+            <td (click)='navigateToApp(f)'>
+              <div class="flex-v">
+                <div class="owner-img-placeholder" [id]="'owner-img-placeholder-'+i">
+                  <img [src]="f?.userData?.photoURL" alt="" class="owner-img" (load)="loadedOwnerImg(i)">
+                </div>
+                <span class="owner-name">{{f?.userData?.name}}</span>
+              </div>
+            </td>
+            <td text-center (click)='navigateToApp(f)'>
+              <span text-capitalize>{{f.reviewData?.flags ? f.reviewData?.flags : 0}}</span>
+            </td>
+            <td text-center (click)='navigateToApp(f)'>
+              <span>{{f?.reviewData?.dateLastFlagged | toFullDateAndTime}} ({{f?.reviewData?.dateLastFlagged | timeFromNow}})</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-card>
+  </div>
+  
+</ion-content>

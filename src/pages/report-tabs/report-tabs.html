@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon color="white" name="menu"></ion-icon>
+    </button>
+    <ion-title>Reports from Users</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <super-tabs #superTabs scrollTabs="true" sideMenu="left" badgeColor="danger" toolbarColor="white" toolbarBackground="super-tabs-default" indicatorColor="white" *ngIf="pageLoaded">
+    <super-tab [root]="tab1" [badge]="frCount != 0 ? frCount : ''" title="Flag Reviews"></super-tab>
+    <super-tab [root]="tab2" [badge]="rpCount != 0 ? rpCount : ''" title="Reported Problems"></super-tab>
+  </super-tabs>
+</ion-content>

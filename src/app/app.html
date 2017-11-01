@@ -1,0 +1,30 @@
+<ion-split-pane>
+
+  <ion-menu [content]="content">
+    <ion-header>
+      <div class="side-nav-panel">
+        <img tappable [src]="admin?.photoURL ? admin?.photoURL : 'https://storage.googleapis.com/showcase-it.appspot.com/user-placeholder.png'" alt="" class="admin-photo" (click)="changeProfileData()">
+        <div tappable *ngIf="admin?.name" class="display-grid pad-5 admin-data-container" (click)="changeProfileData()">
+          <span class="bold white">{{admin?.name}}</span>
+          <span class="white">{{admin?.email}}</span>
+        </div>
+      </div>
+    </ion-header>
+
+    <ion-content>
+      <ion-list class="mtop-10" no-lines>
+        <div *ngFor="let p of pages" [class.sideMenuActive]="selectedSideMenuIndex==p.index ? true:null">
+          <button ion-item menuClose (click)="openPage(p)" [class.sideMenuActive]="selectedSideMenuIndex==p.index ? true:null" *ngIf="(p.requiresSuper && cacheService.isSuperAdmin) || !p.requiresSuper">
+            <ion-icon item-start md-name [md-name]="p.icon" [color]="selectedSideMenuIndex==p.index ? 'primary':null"></ion-icon>{{p.title}}
+            <!--<ion-badge item-right color="danger">{{p?.count}}</ion-badge>-->
+          </button>
+        </div>
+      </ion-list>
+    </ion-content>
+
+  </ion-menu>
+
+  <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+  <ion-nav main [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+
+</ion-split-pane>

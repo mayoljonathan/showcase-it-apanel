@@ -1,0 +1,253 @@
+page-main-app-details {
+    @media (max-width: 576px){
+        .container {
+            padding: 0 !important;
+
+            ion-card{
+                margin: 0 !important;
+                width: 100%;
+            }
+        }
+    }
+    .page-container{
+        padding: 0 16px 16px 16px;
+    }
+
+    .app-info-container{
+        // height: 300px;
+        border-bottom: 1px solid dedede;
+        padding: 16px;
+        background-color: #fff;
+    }
+    .app-info-column{
+        min-width: 300px;
+    }
+    .app-title{
+        font-size: 20px;
+    }
+    .info-label{
+        width: 120px;
+        max-width: 120px;
+        min-width: 120px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+    }
+    ion-row{
+        margin-top: 3px;
+    }
+
+    @keyframes placeHolderShimmer{
+        0%{
+            background-position: -60px 0
+        }
+        100%{
+            background-position: 60px 0
+        }
+    }
+    .app-icon{
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        min-height: 60px;
+        border-radius: 5px;
+    }
+    .app-icon-placeholder {
+        border-radius: 5px;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeHolderShimmer;
+        animation-timing-function: linear;
+        background: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        min-height: 60px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .owner-img{
+        border-radius: 100px;
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        border: 1px solid #dedede;
+    }
+    .owner-name{
+        max-height: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // display: -webkit-box;
+        // -webkit-line-clamp: 3;
+        // -webkit-box-orient: vertical;
+    }
+
+    .flex-item:not(:first-child){
+        margin-top: 4px;
+    }
+
+    .ss-parent-container{
+        width: 100%;
+        // height: 300px;
+        // max-height: 300px;
+        display: -webkit-box;
+        flex-wrap: nowrap;
+        overflow: auto;
+        // overflow-y: hidden;
+        // white-space: wrap;
+    }
+    .screenshot-placeholder{
+        display: flex;
+        align-items: center;
+        width: 300px;
+        height: 300px;
+        max-height: 300px;
+    }
+    .screenshot{
+        // height: 300px;
+        height: 300px;
+        max-height: 300px;
+        min-height: 300px;
+        width: 300px;
+        object-fit: cover;
+        // padding: 1px;
+    }
+    .shimmer{
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeHolderShimmerSS;
+        animation-timing-function: linear;
+        background: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    }
+    @keyframes placeHolderShimmerSS{
+        0%{
+            background-position: -300px 0
+        }
+        100%{
+            background-position: 0px 0
+        }
+    }
+
+    @keyframes userPhotoShimmer{
+        0%{
+            background-position: -40px 0
+        }
+        100%{
+            background-position: 40px 0
+        }
+    }
+    .user-photo-placeholder {
+        border-radius: 100px;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: userPhotoShimmer;
+        animation-timing-function: linear;
+        background: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        position: relative;
+        overflow: hidden;
+    }
+    .user-photo{
+        border-radius: 100px;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        border: 1px solid #dedede;
+    }
+
+
+    // OS & PLATFORM
+    .os-container{
+        height: 150px;
+        border: 1px solid #dedede;
+    }
+    .os-icon-container{
+        width: 100px;
+    }
+    .section{
+        background-color: #039BE5;
+    }
+
+    // CUSTOM
+    .header-image{
+        height: 60px;
+        width: 60px;
+        margin-right: 10px;
+    }
+    // END CUSTOM
+    .platform-container{
+        width: 50px;
+        height: 50px;
+        border-radius: 100px;
+        background-color: #dedede;
+        margin: 5px;
+    }
+    
+
+    .developer-button:hover{
+        background-color: #F1F1F1;
+        cursor: pointer;
+    }
+
+    .android-only{
+        position: absolute;
+        z-index: 0;
+        /* opacity: 0.5; */
+        right: -20px;
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        display: inline-block;
+    }
+
+    .bar{
+        margin-left: 10px;
+        background-color: #488aff;
+        height: 20px;
+    }
+    .all-ratings{
+        padding-left: 64px !important;
+        padding-right: 64px !important;
+    }
+    .star-counter-text{
+        padding-left: 5px;
+    }
+    .reviews-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    // REVIEWS
+    .reviews-container{
+        min-height: 100px;
+    }
+
+    .top-message {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding-top: 56px;
+        z-index: 100;
+        text-align: center;
+        min-height: 82px;
+        background-color: #45494B;
+    }
+    .appStats div{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
+    // NEW
+    ion-chip{
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}

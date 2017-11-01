@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon color="white" name="menu"></ion-icon>
+    </button>
+    <ion-title>App Categories</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <super-tabs #superTabs scrollTabs="true" sideMenu="left" toolbarColor="white" toolbarBackground="super-tabs-default" indicatorColor="white" *ngIf="pageLoaded">
+    <super-tab [root]="tab1" title="Applications"></super-tab>
+    <super-tab [root]="tab2" title="Games"></super-tab>
+  </super-tabs>
+</ion-content>

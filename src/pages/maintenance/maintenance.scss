@@ -1,0 +1,28 @@
+page-maintenance {
+    @media (max-width: 576px){
+        .container {
+            padding: 0 !important;
+
+            ion-card{
+                margin: 0 !important;
+                width: 100%;
+            }
+        }
+    }
+
+    .available{
+        margin-right: 10px;
+        width: 10px;
+        height: 10px;
+        background-color: #32db64;
+        border-radius: 100px;
+    }
+
+    .unavailable{
+        margin-right: 10px;
+        width: 10px;
+        height: 10px;
+        background-color: #f53d3d;
+        border-radius: 100px;
+    }
+}

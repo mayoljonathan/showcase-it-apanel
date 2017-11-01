@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Add Administrator</ion-title>
+    <ion-buttons end>
+			<button ion-button (click)="dismiss()">
+				<ion-icon name="close" color="white"></ion-icon>
+			</button>
+		</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding-left padding-right>
+
+  <form [formGroup]="form" (ngSubmit)="submitForm(form)">
+    <ion-list>
+      <ion-item no-padding>
+        <ion-label floating>Name</ion-label>
+        <ion-input formControlName="name" type="text"></ion-input>  
+      </ion-item>
+      <p ion-text *ngIf="form.controls.name.value.trim().length==0 && (form.controls.name.dirty || submitAttempt)" color="danger">Name is required</p>
+      <p ion-text *ngIf="form.controls.name.value.trim().length>50 && (form.controls.name.dirty || submitAttempt)" color="danger">Name must not exceed to 50 characters</p>
+    
+      <ion-item no-padding>
+        <ion-label floating>Email address</ion-label>
+        <ion-input formControlName="email" type="email"></ion-input>  
+      </ion-item>
+      <p ion-text *ngIf="form.controls.email.value.trim().length==0 && (form.controls.email.dirty || submitAttempt)" color="danger">Email address is required</p>
+      <p ion-text *ngIf="form.controls.email.value.trim().length!=0 && (!form.controls.email.valid && (form.controls.email.dirty || submitAttempt))" color="danger">Please enter a valid email address</p>
+      
+      <ion-item no-padding>
+        <ion-label floating>Password</ion-label>
+        <ion-input formControlName="password" type="password" [disabled]="useDefaultPassword"></ion-input>  
+      </ion-item>
+      <p ion-text *ngIf="form.controls.password.value.trim().length==0 && (form.controls.password.dirty || submitAttempt)" color="danger">Password is required</p>
+      <p ion-text *ngIf="(form.controls.password.value.trim().length!=0 && form.controls.password.value.trim().length<6) && (form.controls.password.dirty || submitAttempt)" color="danger">Password must be at least 6 characters</p>
+      
+    </ion-list>
+
+    <ion-row float-left class="mtop-10">
+      <div class="center" float-right>
+        <ion-col col-auto style="vertical-align:sub"> 
+          <ion-checkbox (ionChange)="setDefaultPassword($event.value)"></ion-checkbox>
+        </ion-col>
+        <ion-col>Use default password</ion-col>
+      </div>
+    </ion-row>
+
+    <ion-row float-left class="mleft-10 mtop-10">
+      <div class="center" float-right>
+        <ion-col col-auto style="vertical-align:sub"> 
+          <ion-checkbox (ionChange)="onSuperAdminChange($event.value)"></ion-checkbox>
+        </ion-col>
+        <ion-col>Super Administrator</ion-col>
+      </div>
+    </ion-row>
+    <ion-row margin-bottom float-right>
+      <button ion-button type="submit">Add Administrator</button>
+    </ion-row>
+  </form>
+
+  <!--<form [formGroup]="form">-->
+  <!--  <ion-item no-padding>-->
+  <!--    <ion-label floating>Name</ion-label>-->
+  <!--    <ion-input formControlName="name" type="text"></ion-input>  -->
+  <!--  </ion-item>-->
+  <!--</form>-->
+
+  <!--<div [formGroup]="administratorForm" (ngSubmit)="submitForm(administratorForm)">-->
+    <!--<ion-list>-->
+  <!--    <ion-item no-padding>-->
+  <!--      <ion-label floating>Name</ion-label>-->
+  <!--      <ion-input formControlName="name" type="text"></ion-input>  -->
+  <!--    </ion-item>-->
+      <!--<ion-item *ngIf="!form.controls.name.valid  && (form.controls.name.dirty || submitAttempt)">-->
+      <!--    <p>Name is required</p>-->
+      <!--</ion-item>-->
+      
+  <!--    <ion-item no-padding>-->
+  <!--      <ion-label floating>Email address</ion-label>-->
+  <!--      <ion-input formControlName="email" type="email"></ion-input>-->
+  <!--    </ion-item>-->
+      <!--<ion-item *ngIf="!form.controls.email.valid  && (form.controls.email.dirty || submitAttempt)">-->
+      <!--    <p>Please a valid email.</p>-->
+      <!--</ion-item>-->
+      
+  <!--    <ion-item no-padding>-->
+  <!--      <ion-label floating>Password</ion-label>-->
+  <!--      <ion-input formControlName="password" type="password"></ion-input>-->
+         <!--[disabled]="useDefaultPassword"-->
+  <!--    </ion-item>-->
+      <!--<ion-item *ngIf="!form.controls.password.valid  && (form.controls.password.dirty || submitAttempt)">-->
+      <!--    <p>Please enter the password.</p>-->
+      <!--</ion-item>-->
+    <!--</ion-list>-->
+
+    <!--<ion-row float-left class="mtop-10">-->
+    <!--  <div class="center" float-right>-->
+    <!--    <ion-col col-auto style="vertical-align:sub"> -->
+    <!--      <ion-checkbox [(ngModel)]="useDefaultPassword"></ion-checkbox>-->
+    <!--    </ion-col>-->
+    <!--    <ion-col>Use default password</ion-col>-->
+    <!--  </div>-->
+    <!--</ion-row>-->
+
+    <!--<ion-row float-right>-->
+    <!--  <button ion-button type="submit">Add Administrator</button>-->
+    <!--</ion-row>-->
+  <!--</div>-->
+
+  <!--SAMPLE-->
+  <!--<form #form="ngForm" (ngSubmit)="submitForm(form)" novalidate>-->
+  <!--  <ion-list>-->
+  <!--    <ion-item no-padding>-->
+  <!--      <ion-label floating>Name</ion-label>-->
+  <!--      <ion-input type="text" [(ngModel)]="admin.name" name="name" #name="ngModel" required></ion-input>-->
+  <!--    </ion-item>-->
+  <!--    <p ion-text [hidden]="name.valid || form.submitted === false" color="danger"> Name is required </p>-->
+      
+  <!--    <ion-item no-padding>-->
+  <!--      <ion-label floating>Email address</ion-label>-->
+  <!--      <ion-input type="email" [(ngModel)]="admin.email" name="email" #email="ngModel" required></ion-input>-->
+  <!--    </ion-item>-->
+  <!--    <p ion-text [hidden]="email.valid || form.submitted === false" color="danger"> Enter a valid email address </p>-->
+      
+  <!--    <ion-item no-padding>-->
+  <!--      <ion-label floating>Password</ion-label>-->
+  <!--      <ion-input type="text" [(ngModel)]="admin.password" name="password" #password="ngModel" minLength="6" required></ion-input>-->
+  <!--    </ion-item>-->
+  <!--    <p ion-text [hidden]="password.length>6 || form.submitted === false" color="danger"> Minimum of 6 characters </p>-->
+  <!--    <p ion-text [hidden]="(password.length<6 && password.valid) || form.submitted === false" color="danger"> Password is required </p>-->
+      
+  <!--  </ion-list>-->
+    
+  <!--  <ion-row float-right>-->
+  <!--    <button ion-button type="submit">Add Administrator</button>-->
+  <!--  </ion-row>-->
+
+  <!--</form>-->
+  
+  
+  
+  <!--NEW-->
+  
+
+  
+</ion-content>

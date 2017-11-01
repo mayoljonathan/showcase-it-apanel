@@ -1,0 +1,80 @@
+page-publish-request {
+    .app-container {
+        white-space: nowrap;
+    }
+    .app-icon{
+        width: 40px;
+        height: 40px;
+        max-width: 40px;
+        border-radius: 5px;
+    }
+    .app-title{
+        margin-left: 10px;
+        max-height: 40px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    @keyframes placeHolderShimmer{
+        0%{
+            background-position: -40px 0
+        }
+        100%{
+            background-position: 40px 0
+        }
+    }
+    .app-icon-placeholder {
+        border-radius: 5px;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeHolderShimmer;
+        animation-timing-function: linear;
+        background: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+    .owner-img-placeholder {
+        border-radius: 100px;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeHolderShimmer;
+        animation-timing-function: linear;
+        background: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+    .owner-img{
+        border-radius: 100px;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+    .owner-name{
+        margin-left: 10px;
+        max-height: 40px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // display: -webkit-box;
+        // -webkit-line-clamp: 3;
+        // -webkit-box-orient: vertical;
+    }
+    ion-icon{
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+}

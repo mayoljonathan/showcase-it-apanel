@@ -1,0 +1,12 @@
+<ion-content class="bg">
+  <div class="full-height flex-hv">
+    <div class="grid-center" *ngIf="connectionError">
+      <ion-icon name="close" class="large-icon"></ion-icon>
+      <span>Please check your internet connection.</span>
+      <button ion-button class="half-width center mtop-5" (click)="retry()">Retry</button>
+    </div>
+    <div class="grid-center" *ngIf="!connectionError">
+      <div class="loader"></div>
+    </div>
+  </div>
+</ion-content>

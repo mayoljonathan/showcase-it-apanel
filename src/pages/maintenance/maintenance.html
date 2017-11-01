@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu" color="light"></ion-icon>
+    </button>
+    <ion-title>Maintenance</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="bg">
+  <div class="container center" padding>
+		<ion-card>
+      <ion-list>
+        <ion-item tappable>
+          <span [class]="getProjectColor()"></span> Showcase It is {{available ? 'available' : 'unavailable'}}
+          <button ion-button [color]="available ? 'danger' : 'primary'" (click)="toggleStatus(available)" item-end>{{available ? 'Disable' : 'Enable'}}</button>
+        </ion-item>
+        <p padding>Note: When disabling Showcase It Web app, users cannot access the web app anymore until it is enabled again.</p>
+      </ion-list>
+		</ion-card>
+  </div>  
+</ion-content>

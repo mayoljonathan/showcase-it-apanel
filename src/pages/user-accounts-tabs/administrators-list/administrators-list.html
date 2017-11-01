@@ -1,0 +1,91 @@
+<ion-content class="bg">
+  <div class="flex-hv full-height" *ngIf="!admins">
+    <div class="loader"></div>
+  </div>
+
+  <div padding class="container-md center" *ngIf="admins && admins?.length > 0">
+    <div class="flex-v flex-end admin-count-container">
+      <ion-icon md-name="people" class="size-28 mright-5"></ion-icon>
+      <span>Administrators Count: <b class="size-16">{{(admins | filter: searchBarInput.value:'name')?.length}}</b></span>
+    </div>
+
+    <ion-card class="table-card-container">
+      <ion-row class="th-bg separator-bot">
+        <ion-col no-padding class="flex-hv">
+          <ion-item class="th-bg">
+            <ion-icon name="md-search" item-start></ion-icon>
+            <ion-input #searchBarInput placeholder="Search administrator by name" clearInput></ion-input>
+          </ion-item>
+        </ion-col>
+        
+        <ion-col col-auto *ngIf="cacheService.isSuperAdmin">
+          <button ion-button (click)="addAdministrator()">Add Administrator</button>
+        </ion-col>
+      </ion-row>
+
+      <div class="flex-hv h-300" *ngIf="admins && admins?.length == 0">
+        <div>
+          <ion-icon md-name="filter_none" class="large-icon flex-h"></ion-icon>
+          <h2 class="size-18">There are currently no administrators yet.</h2>
+        </div>
+      </div>
+      
+      <ion-row class="scroll-x">
+        <table class="full-width">
+          <thead class="th-bg">
+            <th>Name</th>
+            <th>Email Address</th>
+            <th text-center>Date Created</th>
+            <th text-center>Type</th>
+            <th text-center width="50">Status</th>
+            <th text-center width="50">Last Seen</th>
+            <th width="40"></th>
+          </thead>
+          <tbody>
+            <tr class="table-row" *ngFor="let a of (admins | filter: searchBarInput.value:'name');let i=index" padding tappable>
+              <td class="table-name-container">
+                <div class="admin-img-placeholder" [id]="'admin-img-placeholder-'+i">
+                  <img [src]="a.photoURL || '../assets/images/user-placeholder.png'" alt="" (load)="loadedAdminPhoto(i)" class="admin-img">
+                </div>
+                <!--<ion-icon *ngIf="a.isSuperAdmin" md-name="security" color="warning" class="size-20"></ion-icon>-->
+                <span class="table-name">{{a.name}}</span>
+              </td>
+              <td>{{a.email}}</td>
+              <td text-center>{{a.dateCreated | toFullDateAndTime }}</td>
+              <td text-center>
+                <ion-badge color='warning' *ngIf="a?.isSuperAdmin">Super Admin</ion-badge>
+                <ion-badge color='primary' *ngIf="!a?.isSuperAdmin">Admin</ion-badge>
+              </td>
+              <td text-center>
+                <ion-badge *ngIf="a.status === 'active'" color="primary">Active</ion-badge>
+                <ion-badge *ngIf="a.status === 'disabled'" color="disabled">Disabled</ion-badge>
+                 <!--PUT CODE HERE FOR OTHER STATUSES-->
+              </td>
+              <td text-center>
+                <ion-badge *ngIf="a.lastSeen === true; else notOnline" class='secondary size-14'>Online</ion-badge>
+                <ng-template #notOnline>
+                  <span class="size-14">{{!a.lastSeen ? '-' : (a.lastSeen | timeFromNow)}}</span>
+                </ng-template>
+              </td>
+              <!--Just a blank td-->
+              <td *ngIf="a.uid === cacheService.admin_uid"></td>
+              <td text-center *ngIf="a.uid !== cacheService.admin_uid" (click)='showMoreActions(a)'>
+                <ion-icon name="md-more"></ion-icon>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-row>
+
+      <!--EMPTY SEARCH-->
+      <div class="flex-hv h-300" *ngIf="admins?.length!=0 && (admins | filter: searchBarInput.value:'name')?.length === 0">
+        <div>
+          <ion-icon md-name="search" class="large-icon flex-h"></ion-icon>
+          <h2 class="size-18">No administrators matched in your search query.</h2>
+        </div>
+      </div>
+
+    </ion-card>
+  </div>
+  
+</ion-content>
