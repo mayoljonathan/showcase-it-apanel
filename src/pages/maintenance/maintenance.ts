@@ -47,9 +47,9 @@ export class MaintenancePage {
         { text: 'No', handler: reject },
         { text: 'Yes', handler: resolve },
       ];
-      let msg = `Are you sure to disable Showcase It? User's won't be able to access the web app.`;
+      let msg = `Are you sure to disable ShowcaseIT? User's won't be able to access the web app.`;
       if(available){
-        msg = `Are you sure to enable Showcase It? User's will be able to access the web app normally.`;
+        msg = `Are you sure to enable ShowcaseIT? User's will be able to access the web app normally.`;
       }
       this.dialogUtil.showConfirm(msg, buttons,'');
     }).then(()=>{

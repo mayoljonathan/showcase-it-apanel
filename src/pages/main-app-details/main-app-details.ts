@@ -64,10 +64,10 @@ export class MainAppDetailsPage {
     if(!this.app['appData']['disabledByAdminUid']){
       enable = false;
     }
-    let msg = 'Are you sure to disable the app? This app will be temporarily hidden in Showcase It, and the developer of this app cannot send a content update request in this app. Continue?';
+    let msg = 'Are you sure to disable the app? This app will be temporarily hidden in ShowcaseIT, and the developer of this app cannot send a content update request in this app. Continue?';
     let loadingMsg = 'Disabling app.';
     if(enable){ 
-      msg = 'Are you sure to enable the app? This app will be shown in Showcase It and content update restriction will be remove.' 
+      msg = 'Are you sure to enable the app? This app will be shown in ShowcaseIT and content update restriction will be remove.' 
       loadingMsg = 'Enabling app.';
     };
     new Promise((resolve,reject)=>{

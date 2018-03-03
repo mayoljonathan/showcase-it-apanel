@@ -5,7 +5,7 @@ import { AppService,UserService } from "../../../shared/services/";
 import { App } from "../../../shared/models/";
 import { DialogUtil } from "../../../shared/utils/";
 
-@IonicPage({segment: '{type}/{category_uid}'})
+@IonicPage({segment: ':type/:category_uid'})
 @Component({
   selector: 'page-filtered-apps',
   templateUrl: 'filtered-apps.html',

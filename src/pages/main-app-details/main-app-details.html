@@ -14,7 +14,7 @@
   </div>
 
   <div *ngIf="app?.appData?.disabledByAdminUid && pageLoaded && !errorLoad" class="top-message flex-hv">
-		<span class="bold white">This app is disabled and is hidden in Showcase It.</span>
+		<span class="bold white">This app is disabled and is hidden in ShowcaseIT.</span>
   </div>
 
   <div class="container center page-container" *ngIf="pageLoaded && !errorLoad && !appNotAvailable">
@@ -32,7 +32,7 @@
           </ion-col>
           <ion-col class="mleft-10" [class.flex-v]="!app?.appData?.disabledByAdminUid" col-auto no-padding>
             <div class="flex-v">
-              <span>App is {{app?.appData?.disabledByAdminUid ? 'disabled' : 'enabled'}} in Showcase It.</span>
+              <span>App is {{app?.appData?.disabledByAdminUid ? 'disabled' : 'enabled'}} in ShowcaseIT.</span>
               <button ion-button small class="mleft-5" [color]="!app?.appData?.disabledByAdminUid ? 'danger':'primary'" (click)="disableAppStatus()">{{!app?.appData?.disabledByAdminUid ? 'Disable' : 'Enable'}}</button>
             </div>
             <div class="flex-v" text-wrap *ngIf="app?.appData?.disabledByAdminUid">
@@ -82,7 +82,7 @@
         <ion-row>
           <div class="info-label">Created By: </div>
           <div class="flex-v bold" text-wrap tappable (click)="navigateToUser(app?.appData.user_uid)">
-            <span class="owner-name bold">{{app?.userData?.name ? app?.userData?.name : 'Showcase It Developer'}}</span>
+            <span class="owner-name bold">{{app?.userData?.name ? app?.userData?.name : 'ShowcaseIT Developer'}}</span>
             <img [src]="app?.userData?.photoURL ? app?.userData?.photoURL : '../assets/images/user-placeholder.png'" alt="" class="owner-img">
           </div>
         </ion-row>
@@ -114,7 +114,7 @@
         </div>
         <div class="ss-parent-container">
           <div *ngFor="let s of app?.appData?.screenshots;let i=index" [id]="'shimmer-'+i" class="screenshot-placeholder shimmer mright-5">
-            <img [src]="s?.low_res" alt="" class="screenshot" (load)="onScreenshotLoaded(i)" tappable imageViewer>
+            <img [src]="s?.low_res" alt="" class="screenshot" (load)="onScreenshotLoaded(i)" tappable [imageViewer]="s?.high_res">
           </div>
         </div>
       </div>

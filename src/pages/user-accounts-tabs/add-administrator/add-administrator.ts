@@ -39,7 +39,7 @@ export class AddAdministratorPage {
     public dialogUtil: DialogUtil,
   ) {
     this.admin = new Admin();
-    this.admin.superAdmin = false;
+    this.admin.isSuperAdmin = false;
     // this.form = formBuilder.group({
     //   name: ['',Validators.compose([Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*'), Validators.required]) ],
     //   email: ['',Validators.compose([Validators.pattern('^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'), Validators.required]) ],
@@ -70,14 +70,14 @@ export class AddAdministratorPage {
   }
 
   onSuperAdminChange(checked){
-    this.admin.superAdmin = checked;
+    this.admin.isSuperAdmin = checked;
   }
 
   submitForm(form){
     this.submitAttempt = true;
     if(form.valid){
       let data = form.value;
-      data['superAdmin'] = this.admin.superAdmin;
+      data['superAdmin'] = this.admin.isSuperAdmin;
       this.dialogUtil.showLoader('Checking email address if it exists.');
       this.adminService.checkEmailIfExists(data.email).then((res:any)=>{
         if(res.exists){

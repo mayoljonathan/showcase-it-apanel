@@ -7,5 +7,5 @@ export class Admin{
     dateCreated: number;
     status: string;
 
-    superAdmin: boolean;
+    isSuperAdmin: boolean; // changed from superAdmin
 }

@@ -45,7 +45,7 @@
       <ion-row padding class="no-padbottom">
         <ion-col col-auto>
           <div class="app-icon-placeholder" id="app-icon-placeholder">
-            <img [src]="app?.appData?.thumbIconURL || app?.appData?.iconURL" alt="" (load)="loadedAppIcon(i)" class="app-icon" tappable imageViewer>
+            <img [src]="app?.appData?.thumbIconURL || app?.appData?.iconURL" alt="" (load)="loadedAppIcon(i)" class="app-icon" tappable [imageViewer]="app?.appData?.iconURL">
           </div>
         </ion-col>
         <ion-col style="min-width: 250px">
@@ -162,7 +162,7 @@
         </div>
         <div class="ss-parent-container">
           <div *ngFor="let s of app?.appData?.screenshots;let i=index" [id]="'shimmer-'+i" class="screenshot-placeholder shimmer mright-5">
-            <img [src]="s?.low_res" alt="" class="screenshot" (load)="onScreenshotLoaded(i)" tappable imageViewer>
+            <img [src]="s?.low_res" alt="" class="screenshot" (load)="onScreenshotLoaded(i)" tappable [imageViewer]="s?.high_res">
           </div>
         </div>
       </ion-row>

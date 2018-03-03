@@ -27,8 +27,6 @@ export class LoginPage {
     public adminService: AdminService  
   ) {
     this.admin = new Admin();
-    // this.admin.email = 'showcase.it.team@gmail.com';
-    // this.admin.password = 'abc123';
     this.admin.email = '';
     this.admin.password = '';
   }

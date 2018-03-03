@@ -77,9 +77,9 @@ export class AppListTableComponent {
             { text: 'No', handler: reject },
             { text: 'Yes', handler: resolve },
           ];
-          let msg = `Are you sure to ${confirmActionName} this app? The app will operate normally and will be seen on Showcase It.`;
+          let msg = `Are you sure to ${confirmActionName} this app? The app will operate normally and will be seen on ShowcaseIT.`;
           if(result === 'disable'){
-            msg = `Are you sure to ${confirmActionName} this app? The app will be hidden in Showcase It, and the developer of this app cannot send a content update request in this app. Continue?`;
+            msg = `Are you sure to ${confirmActionName} this app? The app will be hidden in ShowcaseIT, and the developer of this app cannot send a content update request in this app. Continue?`;
           }
           this.dialogUtil.showConfirm(msg,buttons,'');
         }).then(()=>{
@@ -98,7 +98,7 @@ export class AppListTableComponent {
             { text: 'No', handler: reject },
             { text: 'Yes', handler: resolve },
           ];
-          this.dialogUtil.showConfirm('Are you sure to delete the app? Both the development app and the app listed in Showcase It will be removed. This action cannot be undone.',buttons,'');
+          this.dialogUtil.showConfirm('Are you sure to delete the app? Both the development app and the app listed in ShowcaseIT will be removed. This action cannot be undone.',buttons,'');
         }).then(()=>{
           this.dialogUtil.showLoader(`Deleting app`);
           this.appService.deleteApp(app.uid,app.user_uid).then(()=>{

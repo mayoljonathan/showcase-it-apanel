@@ -1,6 +1,6 @@
 {
-    "name": "ShowcaseItAdmin",
-    "version": "1.0.0",
+    "name": "ShowcaseITAdminPanel",
+    "version": "1.0.1",
     "author": "Jonathan Mayol",
     "homepage": "https://web.facebook.com/MyTseBVaaN",
     "private": true,
@@ -67,7 +67,7 @@
         "ionic": "3.10.3",
         "typescript": "2.3.4"
     },
-    "description": "Admin Panel for Showcase It",
+    "description": "Admin Panel for ShowcaseIT",
     "config": {
         "ionic_copy": "./copy.config.js",
         "ionic_uglifyjs": "./uglifyjs.config.js"

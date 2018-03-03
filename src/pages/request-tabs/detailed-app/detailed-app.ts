@@ -168,7 +168,7 @@ export class DetailedAppPage {
           let msg = 'Approving and publishing the app.';
           let action = 'approve';
           if(this.type === 'content_update_requests'){ 
-            msg = 'Approving and updating the app in Showcase It.'; 
+            msg = 'Approving and updating the app in ShowcaseIT.'; 
             action = 'approve_cu';
           }
           this.dialogUtil.showLoader(msg);
@@ -184,7 +184,7 @@ export class DetailedAppPage {
           this.appService.managePublishRequest(action,this.app,this.type,mailData).then((res)=>{
             this.dialogUtil.hideLoader();
             if(res){
-              let msg = this.type === 'publish_requests' ? 'App published successfully ' : 'App has been updated in Showcase It ';
+              let msg = this.type === 'publish_requests' ? 'App published successfully ' : 'App has been updated in ShowcaseIT ';
               this.dialogUtil.showToast(msg+'and an email has been sent to the owner.', 4000 , 'bottom');
               return this.navCtrl.pop();
               // return this.navCtrl.setRoot('RequestTabsPage',{},{
