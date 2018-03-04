@@ -21993,6 +21993,7 @@ DashboardCardsComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_services__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_utils__ = __webpack_require__(68);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -22005,11 +22006,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var DashboardPage = (function () {
-    function DashboardPage(navCtrl, navParams, cacheService) {
+    function DashboardPage(navCtrl, navParams, cacheService, helperUtil) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.cacheService = cacheService;
+        this.helperUtil = helperUtil;
         this.cards = [
             { id: 'users' },
             { id: 'highest_rated' },
@@ -22022,6 +22025,9 @@ var DashboardPage = (function () {
     DashboardPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad DashboardPage');
     };
+    DashboardPage.prototype.navigateToGenerateReport = function () {
+        this.helperUtil.launchURL('https://mayoljonathan.github.io/ShowcaseIT-Report-Generator');
+    };
     DashboardPage.prototype.ionViewCanEnter = function () {
         if (!this.cacheService.isLoggedIn) {
             return false;
@@ -22033,13 +22039,12 @@ var DashboardPage = (function () {
 DashboardPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\pc\ShowcaseIT - Admin Panel\src\pages\dashboard\dashboard.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu" color="light"></ion-icon>\n    </button>\n    <ion-title>Dashboard</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="bg">\n  <div class="container-md center" padding>\n      \n    <masonry>\n      <masonry-brick *ngFor="let card of cards" class="dashboard-brick" [class.most-downloaded]="card.id==\'most_downloaded\'" [class.algolia-logs]="card.id==\'algolia_logs\'">\n        <dashboard-cards [card]="card"></dashboard-cards>\n      </masonry-brick>\n    </masonry>\n\n  </div>  \n</ion-content>\n'/*ion-inline-end:"C:\Users\pc\ShowcaseIT - Admin Panel\src\pages\dashboard\dashboard.html"*/,
+        selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\pc\ShowcaseIT - Admin Panel\src\pages\dashboard\dashboard.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu" color="light"></ion-icon>\n    </button>\n    <ion-title>Dashboard</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="bg">\n  <div class="container-md center" padding>\n      \n    <div class="flex-v flex-end">\n      <button ion-button (click)="navigateToGenerateReport()">\n        Generate Report &nbsp;\n        <ion-icon name="md-open" color="white"></ion-icon>\n      </button>\n    </div>\n\n    <masonry>\n      <masonry-brick *ngFor="let card of cards" class="dashboard-brick" [class.most-downloaded]="card.id==\'most_downloaded\'" [class.algolia-logs]="card.id==\'algolia_logs\'">\n        <dashboard-cards [card]="card"></dashboard-cards>\n      </masonry-brick>\n    </masonry>\n\n  </div>  \n</ion-content>\n'/*ion-inline-end:"C:\Users\pc\ShowcaseIT - Admin Panel\src\pages\dashboard\dashboard.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["w" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["y" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__shared_services__["c" /* CacheService */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["w" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["w" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["y" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["y" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services__["c" /* CacheService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services__["c" /* CacheService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__shared_utils__["b" /* HelperUtil */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_utils__["b" /* HelperUtil */]) === "function" && _d || Object])
 ], DashboardPage);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=dashboard.js.map
 
 /***/ })

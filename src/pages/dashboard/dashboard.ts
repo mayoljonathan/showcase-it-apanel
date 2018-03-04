@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { CacheService } from '../../shared/services';
+import { HelperUtil } from "../../shared/utils";
 
 @IonicPage()
 @Component({
@@ -16,6 +17,7 @@ export class DashboardPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public cacheService: CacheService,
+    public helperUtil: HelperUtil,
   ){
     this.cards = [
       {id: 'users'},
@@ -29,6 +31,10 @@ export class DashboardPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DashboardPage');
+  }
+
+  navigateToGenerateReport(){
+    this.helperUtil.launchURL('https://mayoljonathan.github.io/ShowcaseIT-Report-Generator');
   }
 
   ionViewCanEnter(){

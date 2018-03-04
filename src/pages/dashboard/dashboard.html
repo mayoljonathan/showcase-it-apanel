@@ -10,6 +10,13 @@
 <ion-content class="bg">
   <div class="container-md center" padding>
       
+    <div class="flex-v flex-end">
+      <button ion-button (click)="navigateToGenerateReport()">
+        Generate Report &nbsp;
+        <ion-icon name="md-open" color="white"></ion-icon>
+      </button>
+    </div>
+
     <masonry>
       <masonry-brick *ngFor="let card of cards" class="dashboard-brick" [class.most-downloaded]="card.id=='most_downloaded'" [class.algolia-logs]="card.id=='algolia_logs'">
         <dashboard-cards [card]="card"></dashboard-cards>
